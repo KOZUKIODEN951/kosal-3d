@@ -3,7 +3,7 @@ import Lenis from 'lenis';
 import { ThemeMode } from './types';
 import { NavbarClean } from './components/NavbarClean';
 import { HeroClean } from './components/HeroClean';
-import { ProductShowcase } from './components/ProductShowcase';
+import { LocalhostFolders } from './components/LocalhostFolders';
 import { VoiceCallingDemo } from './components/VoiceCallingDemo';
 import { EngagePlatformDemo } from './components/EngagePlatformDemo';
 import { ServicesClean } from './components/ServicesClean';
@@ -90,8 +90,8 @@ export const App: React.FC = () => {
           onExploreDemos={scrollToDemos}
         />
 
-        {/* Flagship Products: Airix, Aivida, Astronomy */}
-        <ProductShowcase />
+        {/* LocalhostHQ Signature Physical Folder Stacks: Airix, Aivida, Astronomy, Voice AI, Engage */}
+        <LocalhostFolders />
 
         {/* Real-time AI Voice Calling Platform with Sub-500ms Turn-Taking */}
         <VoiceCallingDemo />

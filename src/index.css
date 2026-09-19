@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #08080a;
-  --bg-secondary: #0f0f14;
-  --card-bg: rgba(18, 18, 22, 0.65);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --text-primary: #f5f5f7;
-  --text-muted: #8e8e99;
-  --accent-blue: #0A6CDB;
-  --accent-glow: rgba(10, 108, 219, 0.35);
-}
-
-.light {
-  --bg-primary: #f6f7fb;
-  --bg-secondary: #eaecee;
-  --card-bg: rgba(255, 255, 255, 0.85);
+  --bg-primary: #fafbfc;
+  --bg-secondary: #f1f5f9;
+  --card-bg: rgba(255, 255, 255, 0.95);
   --card-border: rgba(0, 0, 0, 0.08);
-  --text-primary: #110C22;
-  --text-muted: #5e5e6e;
+  --text-primary: #0f172a;
+  --text-muted: #475569;
   --accent-blue: #0A6CDB;
   --accent-glow: rgba(10, 108, 219, 0.2);
+}
+
+.dark {
+  --bg-primary: #090b10;
+  --bg-secondary: #0f141e;
+  --card-bg: rgba(15, 20, 30, 0.75);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-blue: #38BDF8;
+  --accent-glow: rgba(10, 108, 219, 0.35);
 }
 
 body {
@@ -30,7 +30,7 @@ body {
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Custom Sleek Scrollbar */
@@ -53,13 +53,13 @@ body {
 .cyber-grid {
   background-size: 60px 60px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-.light .cyber-grid {
-  background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+.dark .cyber-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 /* Glassmorphic card styling */
@@ -84,21 +84,6 @@ body {
   background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
 }
 
-/* Noise overlay */
-.bg-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
-}
-
-/* Editorial typography utilities */
-.font-editorial {
-  font-family: 'Playfair Display', Georgia, serif;
-}
-
 .font-manrope {
   font-family: 'Manrope', sans-serif;
-}
-
-.font-mono-tag {
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.08em;
 }
