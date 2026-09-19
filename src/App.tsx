@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import Lenis from 'lenis';
-import { PerformanceMode, ThemeMode } from './types';
-import { KosalCanvas } from './canvas/KosalCanvas';
-import { Navbar } from './components/Navbar';
-import { HeroStorytelling } from './components/HeroStorytelling';
-import { ServicesSection } from './components/ServicesSection';
-import { WhyKosalSection } from './components/WhyKosalSection';
-import { AboutSection } from './components/AboutSection';
-import { BriefBuilderSection } from './components/BriefBuilderSection';
-import { Footer } from './components/Footer';
+import { ThemeMode } from './types';
+import { NavbarClean } from './components/NavbarClean';
+import { HeroClean } from './components/HeroClean';
+import { ProductShowcase } from './components/ProductShowcase';
+import { VoiceCallingDemo } from './components/VoiceCallingDemo';
+import { EngagePlatformDemo } from './components/EngagePlatformDemo';
+import { ServicesClean } from './components/ServicesClean';
+import { WhyKosalClean } from './components/WhyKosalClean';
+import { BriefBuilderClean } from './components/BriefBuilderClean';
+import { FooterClean } from './components/FooterClean';
 import { CustomCursor } from './components/CustomCursor';
-import { MobileNav } from './components/MobileNav';
 
 export const App: React.FC = () => {
-  const [perfMode, setPerfMode] = useState<PerformanceMode>('high');
-  const [theme, setTheme] = useState<ThemeMode>('dark');
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [preselectedService, setPreselectedService] = useState('');
+  // Default to light mode for the clean, minimalist Stripe/LocalhostHQ look requested by user
+  const [theme, setTheme] = useState<ThemeMode>('light');
+  const [preselectedService, setPreselectedService] = useState<string>('');
 
   // Handle Dark / Light mode class on document element
   useEffect(() => {
@@ -30,10 +28,10 @@ export const App: React.FC = () => {
     }
   }, [theme]);
 
-  // Lenis Smooth Inertia Scroll (Emotion Agency signature buttery feel)
+  // Lenis Smooth Scroll
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
@@ -45,37 +43,12 @@ export const App: React.FC = () => {
     };
     const animId = requestAnimationFrame(raf);
 
-    // Track scroll progress across entire document height
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        const progress = Math.min(1, Math.max(0, window.scrollY / totalScroll));
-        setScrollProgress(progress);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
     return () => {
       cancelAnimationFrame(animId);
       lenis.destroy();
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  // Track normalized mouse coordinates for 3D physics (-1 to 1)
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const normX = (e.clientX / window.innerWidth) * 2 - 1;
-      const normY = -(e.clientY / window.innerHeight) * 2 + 1;
-      setMousePos({ x: normX, y: normY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Smooth scroll helper to section
   const scrollToContact = (serviceName?: string) => {
     if (serviceName) {
       setPreselectedService(serviceName);
@@ -86,76 +59,62 @@ export const App: React.FC = () => {
     }
   };
 
-  const scrollToServices = () => {
-    const elem = document.getElementById('services');
+  const scrollToDemos = () => {
+    const elem = document.getElementById('products');
     if (elem) {
       elem.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
   return (
-    <div className={`relative min-h-screen ${theme === 'dark' ? 'bg-[#08080a] text-[#ededed]' : 'bg-[#f6f7fb] text-[#110C22]'} transition-colors duration-500 overflow-x-hidden`}>
+    <div className={`relative min-h-screen ${theme === 'dark' ? 'bg-[#090b10] text-slate-100' : 'bg-[#fafbfc] text-slate-900'} font-sans transition-colors duration-300 selection:bg-blue-500 selection:text-white`}>
       {/* Precision Trailing Custom Cursor */}
       <CustomCursor />
 
-      {/* Cyber Grid & Ambient Grain Backdrop */}
-      <div className="fixed inset-0 cyber-grid pointer-events-none z-[1] opacity-60" />
-      <div className="fixed inset-0 bg-noise pointer-events-none z-[2]" />
+      {/* Subtle Grid Backdrop */}
+      <div className="fixed inset-0 cyber-grid pointer-events-none z-0 opacity-40" />
 
-      {/* 3D WebGL Canvas Layer */}
-      <KosalCanvas
-        scrollProgress={scrollProgress}
-        mousePos={mousePos}
-        perfMode={perfMode}
-        theme={theme}
-      />
-
-      {/* Primary Top Navigation */}
-      <Navbar
-        perfMode={perfMode}
-        setPerfMode={setPerfMode}
+      {/* Clean Header Navigation */}
+      <NavbarClean
         theme={theme}
         setTheme={setTheme}
         onOpenBrief={() => scrollToContact()}
       />
 
-      {/* Main Content Sections */}
+      {/* Main Content Hierarchy */}
       <main className="relative z-10">
-        {/* Scroll Storytelling Hero */}
-        <HeroStorytelling
-          scrollProgress={scrollProgress}
-          onExploreServices={scrollToServices}
+        {/* Stripe-style Minimalist Hero with live 3D Data Sphere */}
+        <HeroClean
+          theme={theme}
           onOpenBrief={() => scrollToContact()}
+          onExploreDemos={scrollToDemos}
         />
 
-        {/* 6 Interactive 3D Service Cards */}
-        <ServicesSection
+        {/* Flagship Products: Airix, Aivida, Astronomy */}
+        <ProductShowcase />
+
+        {/* Real-time AI Voice Calling Platform with Sub-500ms Turn-Taking */}
+        <VoiceCallingDemo />
+
+        {/* Engage Platform: Instagram & WhatsApp Cloud Automation */}
+        <EngagePlatformDemo />
+
+        {/* Core Engineering Services */}
+        <ServicesClean
           onSelectService={(service) => scrollToContact(service)}
         />
 
-        {/* 4 Pillars & Architectural Benchmarks */}
-        <WhyKosalSection />
+        {/* Architectural Pillars & Kosal Standard */}
+        <WhyKosalClean />
 
-        {/* About Kosal Story & Metrics */}
-        <AboutSection />
-
-        {/* Interactive Brief Builder & Contact Hub */}
-        <BriefBuilderSection
-          preselectedService={preselectedService}
+        {/* High-Conversion Project Builder / Contact */}
+        <BriefBuilderClean
+          preselectedItem={preselectedService}
         />
       </main>
 
-      {/* Agency Footer */}
-      <Footer />
-
-      {/* Mobile Action Dock */}
-      <MobileNav
-        perfMode={perfMode}
-        setPerfMode={setPerfMode}
-        theme={theme}
-        setTheme={setTheme}
-        onOpenBrief={() => scrollToContact()}
-      />
+      {/* Enterprise Footer with LLP and Office Credentials */}
+      <FooterClean />
     </div>
   );
 };
